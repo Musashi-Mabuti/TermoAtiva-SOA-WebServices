@@ -101,10 +101,6 @@ A aplicação foi derivada do código da API presente no ZIP `TermoAtiva-Operati
 - A equipe informou compilação bem-sucedida e apresentou capturas dos testes HTTP executados localmente em .NET 8 em 16/11/2026. A implantação no IIS ainda não foi verificada nesta entrega.
 - Registre os prompts usados com IA em `prompts.md` conforme orientação da GS.
 
-## Entrega
-
-Envie **o link do repositório GitHub** na tarefa de SOA & Web Services no Teams até **19/11/2026, 23h55**, conforme o briefing. Inclua capturas de tela reais da execução e dos testes no repositório.
-
 ## Evidências de validação local (16/11/2026)
 
 A equipe executou os 12 cenários no Insomnia e forneceu capturas de todos os resultados esperados (`200`, `201`, `400`, `401` e `404`). A estrutura SQLite e as migrações `001_initial_schema.sql` e `002_indexes.sql` também foram demonstradas. Veja [índice de evidências](evidencias/README.md). Essas capturas documentam testes manuais, não uma suíte automatizada.
