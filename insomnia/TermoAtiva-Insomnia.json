@@ -1,0 +1,185 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-11-16T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2024",
+  "resources": [
+    {
+      "_id": "wrk_termoativa",
+      "_type": "workspace",
+      "name": "TermoAtiva - SOA API",
+      "description": "Testes manuais GET POST PUT e cenários de erro."
+    },
+    {
+      "_id": "env_termoativa",
+      "_type": "environment",
+      "parentId": "wrk_termoativa",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:5000",
+        "device_key": "demo-SE01-troque-em-producao"
+      }
+    },
+    {
+      "_id": "req_003",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "01 - Health - 200",
+      "method": "GET",
+      "url": "{{ _.base_url }}/health",
+      "headers": []
+    },
+    {
+      "_id": "req_004",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "02 - Pontos - 200",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos-acolhimento",
+      "headers": []
+    },
+    {
+      "_id": "req_005",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "03 - Pontos com filtro - 200",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos-acolhimento?tipo=bebedouro&busca=Sé",
+      "headers": []
+    },
+    {
+      "_id": "req_006",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "04 - Telemetria - 201 (configurar chave)",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/telemetria",
+      "headers": [
+        {
+          "name": "X-Device-Key",
+          "value": "{{ _.device_key }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"dispositivoId\": \"ESP32-SE-01\",\n  \"bairro\": \"Sé\",\n  \"temperaturaC\": 37.2,\n  \"umidadePct\": 65,\n  \"indiceRadiacao\": 9\n}"
+      }
+    },
+    {
+      "_id": "req_007",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "05 - Telemetria inválida - 400",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/telemetria",
+      "headers": [
+        {
+          "name": "X-Device-Key",
+          "value": "{{ _.device_key }}"
+        },
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"dispositivoId\": \"ESP32-SE-01\",\n  \"bairro\": \"Sé\",\n  \"temperaturaC\": 95,\n  \"umidadePct\": 65,\n  \"indiceRadiacao\": 9\n}"
+      }
+    },
+    {
+      "_id": "req_008",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "06 - Telemetria sem chave - 401",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/telemetria",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"dispositivoId\": \"ESP32-SE-01\",\n  \"bairro\": \"Sé\",\n  \"temperaturaC\": 35,\n  \"umidadePct\": 60,\n  \"indiceRadiacao\": 8\n}"
+      }
+    },
+    {
+      "_id": "req_009",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "07 - Alerta atual - 200 após telemetria",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/alertas/atual?bairro=Sé",
+      "headers": []
+    },
+    {
+      "_id": "req_010",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "08 - Criar ocorrência - 201",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/ocorrencias",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"pontoId\": 1,\n  \"categoria\": \"sem_agua\",\n  \"descricao\": \"Bebedouro sem água no período da tarde\",\n  \"origem\": \"app\"\n}"
+      }
+    },
+    {
+      "_id": "req_011",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "09 - Buscar ocorrência - 200 (id do POST)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/ocorrencias/1",
+      "headers": []
+    },
+    {
+      "_id": "req_012",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "10 - Atualizar ocorrência - 200 (id do POST)",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/api/ocorrencias/1",
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"descricao\": \"Equipe de manutenção acionada\"\n}"
+      }
+    },
+    {
+      "_id": "req_013",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "11 - Ocorrência inexistente - 404",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/ocorrencias/999999",
+      "headers": []
+    },
+    {
+      "_id": "req_014",
+      "_type": "request",
+      "parentId": "wrk_termoativa",
+      "name": "12 - Busca inválida - 400",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/pontos-acolhimento?busca=%27%20OR%201%3D1--",
+      "headers": []
+    }
+  ]
+}
